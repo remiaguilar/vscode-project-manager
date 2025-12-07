@@ -1,0 +1,165 @@
+{
+  "name": "project-manager",
+  "displayName": "Project Manager",
+  "description": "Gestor de proyectos con soporte para apps externas",
+  "version": "1.0.0",
+  "publisher": "remiaguilar",
+  "author": {
+    "name": "Remi Aguilar",
+    "url": "https://remiaguilar.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remiaguilar/vs-notes"
+  },
+  "bugs": {
+    "url": "https://github.com/remiaguilar/vs-notes/issues"
+  },
+  "homepage": "https://github.com/remiaguilar/vs-notes#readme",
+  "keywords": [
+    "project-manager",
+    "workspace",
+    "macos-apps",
+    "external-apps",
+    "organization",
+    "open-source"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "projectManager.selectDirectory",
+        "title": "Seleccionar Directorio de Proyectos",
+        "category": "Project Manager",
+        "icon": "$(folder)"
+      },
+      {
+        "command": "projectManager.openProject",
+        "title": "Abrir Proyecto",
+        "category": "Project Manager"
+      },
+      {
+        "command": "projectManager.addProject",
+        "title": "Agregar Proyecto",
+        "category": "Project Manager",
+        "icon": "$(add)"
+      },
+      {
+        "command": "projectManager.addProjectToFolder",
+        "title": "Agregar Proyecto a Carpeta",
+        "category": "Project Manager",
+        "icon": "$(add)"
+      },
+      {
+        "command": "projectManager.removeProject",
+        "title": "Eliminar Proyecto",
+        "category": "Project Manager",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "projectManager.openInFinder",
+        "title": "Abrir en Finder/Explorer",
+        "category": "Project Manager",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "projectManager.addCurrentProject",
+        "title": "Agregar Proyecto Actual",
+        "category": "Project Manager",
+        "icon": "$(star-add)"
+      },
+      {
+        "command": "projectManager.createFolder",
+        "title": "Crear Carpeta",
+        "category": "Project Manager",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "projectManager.addExternalApp",
+        "title": "Agregar Aplicación Externa",
+        "category": "Project Manager",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "projectManager.refresh",
+        "title": "Refrescar",
+        "category": "Project Manager",
+        "icon": "$(refresh)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "project-manager",
+          "title": "Project Manager",
+          "icon": "$(folder-library)"
+        }
+      ]
+    },
+    "views": {
+      "project-manager": [
+        {
+          "id": "projectManagerView",
+          "name": "Proyectos"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "projectManager.addProject",
+          "when": "view == projectManagerView",
+          "group": "navigation"
+        },
+        {
+          "command": "projectManager.createFolder",
+          "when": "view == projectManagerView",
+          "group": "navigation"
+        },
+        {
+          "command": "projectManager.refresh",
+          "when": "view == projectManagerView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "projectManager.addProjectToFolder",
+          "when": "view == projectManagerView && viewItem == projectFolder"
+        },
+        {
+          "command": "projectManager.openInFinder",
+          "when": "view == projectManagerView && viewItem == project"
+        },
+        {
+          "command": "projectManager.removeProject",
+          "when": "view == projectManagerView"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "build": "npm run compile && (code --uninstall-extension remiaguilar.project-manager || true) && vsce package --allow-missing-repository --allow-star-activation --no-yarn && code --install-extension project-manager-1.0.0.vsix --force"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.0"
+  }
+}
